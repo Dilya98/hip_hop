@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Хип-хоп культура и молодежный сленг</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #11131a;
+      --card: #171a21;
+      --text: #e9e9e9;
+      --muted: #b8beca;
+      --accent: #ff5bd5; /* Яркий розово-фиолетовый */
+      --accent2: #6df0ff; /* Яркий голубой */
+      --glow: 0 0 14px rgba(255,91,213,.8);
+      --quiz-bg: linear-gradient(180deg, rgba(30,10,40,.95), rgba(15,5,25,.95)); /* Более темный и насыщенный фон для викторины */
+      --choice-hover: rgba(255,255,255,.18); /* Более яркий цвет при наведении */
+      --correct-bg: rgba(40, 255, 150, .35); /* Сияющий зеленый для правильного ответа */
+      --correct-border: rgba(40, 255, 150, .9);
+      --wrong-bg: rgba(255, 60, 80, .35); /* Яркий красный для неправильного ответа */
+      --wrong-border: rgba(255, 60, 80, .9);
+      --button-gradient: linear-gradient(135deg, var(--accent2), var(--accent), #ff91d0); /* Голубой -> Розовый -> Более яркий розовый */
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto;
+      color: var(--text);
+      background: radial-gradient( circle at 20% 0%, rgba(255,0,128,.15), transparent 40% ),
+                  radial-gradient( circle at 100% 100%, rgba(109,240,255,.15), transparent 40% ),
+                  linear-gradient(135deg, #0a0a0a 0%, #0b0f2b 80%);
+      background-attachment: fixed;
+    }
+
+    a { color: #fff; text-decoration: none; }
+
+    /* Header / Hero */
+    header.hero {
+      position: relative;
+      padding: 58px 20px; /* Немного больше отступов */
+      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(155deg, rgba(0,0,0,.0) 0, rgba(0,0,0,.0) 60%),
+                  linear-gradient(145deg, rgba(20,20,40,.9), rgba(10,10,20,.9) 70%);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    header.hero h1 {
+      font-size: 3rem; /* Крупнее заголовок */
+      font-weight: 800;
+      letter-spacing: .7px;
+      margin: 0 0 12px;
+      text-shadow: 0 4px 20px rgba(0,0,0,.8); /* Более сильная тень */
+      background: linear-gradient(135deg, #fff, #ccc); /* Легкий градиент на тексте */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header.hero p {
+      font-size: 1.15rem; /* Немного больше текст */
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0 auto 24px; /* Больше отступ */
+      line-height: 1.6;
+    }
+
+    nav.main-nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px; /* Больше расстояние между ссылками */
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    nav.main-nav a {
+      padding: 12px 20px; /* Больше padding */
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.15);
+      transition: transform .3s ease, background .3s ease, box-shadow .3s ease; /* Плавнее анимация */
+      font-weight: 700; /* Жирнее */
+      font-size: 1.05rem;
+      text-transform: uppercase; /* Заглавные буквы */
+      letter-spacing: .5px;
+    }
+
+    nav.main-nav a:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.16);
+      box-shadow: 0 5px 15px rgba(109,240,255,.2), 0 2px 5px rgba(255,91,213,.3); /* Неоновые тени */
+    }
+
+    /* Layout container */
+    .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; } /* Увеличили padding */
+
+    section.section {
+      padding: 36px 0; /* Больше padding vertical */
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    section.section:last-child { border-bottom: none; } /* Последний раздел без границы */
+
+    section.section h2 {
+      font-size: 2.2rem; /* Крупнее подзаголовок */
+      margin: 0 0 16px;
+      color: #fff;
+      text-shadow: 0 2px 15px rgba(0,0,0,.7);
+      background: linear-gradient(135deg, #6df0ff, #ff5bd5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.lead { color: var(--muted); font-size: 1.1rem; line-height: 1.7; } /* Увеличили размер и line-height */
+
+    /* Slang dictionary grid - Изображения удалены */
+    #cards {
+      display: grid;
+      gap: 20px; /* Увеличили расстояние между карточками */
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Чуть шире карточки */
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(23,26,33,.95), rgba(17,20,28,.95));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 16px; /* Больше padding */
+      box-shadow: 0 10px 30px rgba(0,0,0,.4); /* Более выраженная тень */
+      transition: transform .3s ease, box-shadow .3s ease; /* Плавнее анимация */
+      display: flex;
+      flex-direction: column;
+      gap: 10px; /* Увеличили расстояние между элементами карточки */
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,.6); /* Усиленная тень при наведении */
+    }
+
+    /* .card-img Блок удален */
+
+    .term {
+      font-size: 1.3rem; /* Немного крупнее термин */
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Увеличили */
+    }
+
+    .term .tag {
+      display: inline-block;
+      padding: 4px 12px; /* Больше padding */
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2) 80%); /* Сочетание акцентов */
+      font-size: .8rem; /* Чуть меньше размер тега */
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+
+    .def {
+      color: #dbe3ee;
+      margin-top: 2px;
+      font-size: 1rem; /* Немного крупнее определение */
+      line-height: 1.6;
+    }
+
+    .example {
+      font-family: ui-monospace,SFMono-Regular,Monaco,Consolas;
+      color:#9bd7ff;
+      margin-top:8px; /* Увеличили */
+      font-size:.9rem; /* Крупнее */
+      line-height: 1.5;
+      border-left: 2px solid var(--accent2); /* Добавляем неоновую полоску слева */
+      padding-left: 10px;
+    }
+
+    /* Search input */
+    #search {
+      width: 100%;
+      padding: 14px 18px; /* Больше padding */
+      border-radius: 10px;
+      border:1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.25);
+      color:#fff;
+      font-size: 1.05rem; /* Крупнее */
+      outline: none;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,.3); /* Внутренняя тень */
+      transition: border-color .3s ease, box-shadow .3s ease;
+    }
+
+    #search:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(109,240,255,.25); /* Больше свечения */
+    }
+
+    /* QUIZ - Сделали ярче! */
+    .quiz {
+      display: grid;
+      gap: 16px; /* Больше расстояние */
+      padding: 24px; /* Больше padding */
+      border-radius: 14px;
+      background: var(--quiz-bg); /* Яркий фон */
+      border: 1px solid rgba(255,255,255,.15); /* Чуть ярче граница */
+      box-shadow: inset 0 0 25px rgba(0,0,0,.4); /* Внутреннее свечение */
+    }
+
+    .question {
+      font-size: 1.3rem; /* Крупнее вопрос */
+      font-weight: 700;
+      line-height: 1.6;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,.5);
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px; /* Больше расстояние между вариантами */
+    }
+
+    .choice {
+      padding: 14px 18px; /* Больше padding */
+      border-radius: 10px; /* Больше скругление */
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.15);
+      cursor: pointer;
+      text-align: left;
+      font-size: 1.05rem; /* Крупнее текст */
+      font-weight: 600;
+      transition: background .3s ease, border-color .3s ease, transform .2s ease;
+    }
+
+    .choice:hover {
+      background: var(--choice-hover);
+      border-color: var(--accent2); /* Голубая граница при наведении */
+      transform: translateX(4px); /* Небольшой сдвиг */
+    }
+
+    .choice.correct { /* Цвета выбранного правильного ответа */
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+      box-shadow: 0 0 10px rgba(40,255,150,.4); /* Неоновое свечение */
+    }
+
+    .choice.wrong { /* Цвета выбранного неправильного ответа */
+      background: var(--wrong-bg);
+      border-color: var(--wrong-border);
+      box-shadow: 0 0 10px rgba(255,60,80,.4); /* Неоновое свечение */
+    }
+
+    #next, #restart {
+      padding: 12px 20px; /* Больше padding */
+      border-radius: 10px; /* Больше скругление */
+      border: none;
+      background: var(--button-gradient); /* Яркий градиент */
+      color: #0b0e15; /* Темный текст для контраста */
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    #next:hover, #restart:hover {
+        transform: translateY(-2px) scale(1.02); /* Эффект при наведении */
+        box-shadow: 0 8px 20px rgba(255,91,213,.4), 0 3px 10px rgba(109,240,255,.4); /* Неоновые тени */
+    }
+
+
+    #next:disabled, #restart:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .score {
+      font-weight: 700;
+      font-size: 1.2rem; /* Крупнее */
+      color: var(--accent); /* Акцентный цвет */
+      text-align: center;
+      margin-top: 14px; /* Отступ сверху */
+    }
+
+    /* Gallery - Изображения удалены */
+    .gallery {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      padding: 8px 0 4px;
+    }
+
+    /* Медиа-запросы */
+    @media (max-width: 900px){
+      header.hero h1 { font-size: 2.6rem; }
+      nav.main-nav a { font-size: 1rem; padding: 10px 16px;}
+    }
+
+    @media (max-width: 700px){
+      header.hero { padding: 40px 20px; }
+      header.hero h1 { font-size: 2rem; }
+      section.section h2 { font-size: 1.8rem; }
+      .container { padding: 24px 15px; }
+    }
+
+    @media (max-width: 500px){
+      header.hero h1 { font-size: 1.7rem; }
+      nav.main-nav { gap: 10px; }
+      nav.main-nav a { font-size: 0.9rem; padding: 8px 14px; }
+      .quiz { padding: 18px; }
+      .question { font-size: 1.1rem; }
+      .choice { font-size: 1rem; padding: 12px 14px; }
+    }
+
+  </style>
+</head>
+<body>
+  <header class="hero" aria-label="Хип-хоп культура и молодежный сленг">
+    <div class="container" style="max-width:900px;">
+      <h1>Хип-хоп культура и <br>влияние на молодежный сленг</h1>
+      <p>Глубокий взгляд на то, как хип-хоп сцена формирует язык молодежи и стиль коммуникации. Разделы: обзор культуры, влияние на сленг, словарь с примерами, интерактивная викторина и галерея фото.</p>
+      <nav class="main-nav" aria-label="Навигация по разделам">
+        <a href="#intro">О культуре</a>
+        <a href="#influence">Влияние</a>
+        <a href="#dictionary">Словарь</a>
+        <a href="#quiz">Игра</a>
+        <a href="#gallery">Галерея</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section id="intro" class="section">
+      <h2>О хип-хоп культуре</h2>
+      <p class="lead">Хип-хоп возник как голос улиц, выразившийся через рэп/флоу, DJ-сет, брейк и граффити. Эта мощная культура, зародившаяся в 1970-х в Бронксе, Нью-Йорк, эволюционировала из локального движения в глобальный феномен, проникая во все сферы жизни, от музыки и моды до языка и искусства.</p>
+    </section>
+
+    <section id="influence" class="section">
+      <h2>Как хип-хоп влияет на молодежный сленг</h2>
+      <p class="lead">Музыкальная индустрия хип-хопа, его тексты, клипы и артисты стали неиссякаемым источником новых слов, выражений и идиом. Рэперы, как современные поэты, часто изобретают и популяризируют сленговые слова, которые затем быстро распространяются среди молодежи, формируя уникальный язык поколения.</p>
+    </section>
+
+    <section id="dictionary" class="section">
+      <h2>Сленговый словарь</h2>
+      <div id="cards">
+        <!-- Пример карточки без изображения -->
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Флексить
+          </div>
+          <div class="def">
+            Демонстрировать свои достижения, хвастаться (часто дорогими вещами, успехом).
+          </div>
+          <div class="example">
+            "Он постоянно <strong>флексит</strong> своим новым авто в соцсетях."
+          </div>
+        </div>
+        <!-- Добавьте сюда другие карточки, если нужно -->
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Кринж
+          </div>
+          <div class="def">
+            Чувство сильной неловкости, стыда или отвращения за чьи-то действия или слова.
+          </div>
+          <div class="example">
+            "Его танцы были настолько плохими, что это был настоящий <strong>кринж</strong>."
+          </div>
+        </div>  
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Вайб
+          </div>
+          <div class="def">
+            Атмосфера, настроение, общая энергетика места, события или человека.
+          </div>
+          <div class="example">
+            "Сегодня тут какой-то странный <strong>вайб</strong>, мне не очень нравится."
+          </div>
+        </div>  
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Токсик
+          </div>
+          <div class="def">
+            Человек, который постоянно негативно влияет на окружающих, отравляет атмосферу.
+          </div>
+          <div class="example">
+            "Я стараюсь избегать этого парня, он настоящий <strong>токсик</strong>."
+          </div>
+        </div>  
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Краш
+          </div>
+          <div class="def">
+            Человек, который вызывает сильное влечение, в которого ты влюблен (часто безответно или тайно).
+          </div>  
+          <div class="example">
+            "Он мой главный <strong>краш</strong> этим летом."
+          </div>
+        </div>  
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Имба
+          </div>
+          <div class="def">
+            Что-то очень сильное, превосходящее ожидания, превосходное. Часто используется в играх, но и в жизни.
+          </div>
+          <div class="example">
+            "Этот новый трек – просто <strong>имба</strong>!"
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Баклоу 
+          </div>
+          <div class="def">
+            подстава, обман
+          </div>
+          <div class="example">
+           "Это была <strong>баклоу</strong> не верю ему"
+          </div>
+        </div>
+       <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Хайп 
+          </div>
+          <div class="def">
+            ажиотаж, шумиха.
+          </div>
+          <div class="example">
+            "Весь этот <strong>хайп</strong> вокруг чипсов прошел за неделю."
+          </div>
+       </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Чекать
+          </div>
+          <div class="def">
+             проверять, смотреть.
+          </div>
+          <div class="example">
+            "Давайте <strong>чекать</strong> расписание"
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Рофл 
+          </div>
+          <div class="def">
+          шутка или смешная ситуация.
+          </div>
+          <div class="example">
+            "– Ты упал? – Да это был <strong>рофл</strong>, я специально.
+          </div>
+        </div> 
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Изи
+          </div>
+          <div class="def">
+            .легко, просто.
+          </div>
+          <div class="example">
+            "Сделать это задание- <strong>изи</strong>"
+          </div>
+        </div> 
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Скуф
+          </div>
+          <div class="def">
+           немолодой мужчина с пивным животом и вредными привычками.
+          </div>
+          <div class="example">
+            "Он превратился в типичного <strong>скуфа</strong>."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Эщкере 
+          </div>
+          <div class="def">
+           выкрик восторга.
+          </div>
+          <div class="example">
+            "<strong>Эщкере,</strong> мы едем на море!"
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Раут 
+          </div>
+          <div class="def">
+             собрание, мероприятие.
+          </div>
+          <div class="example">
+            "На  <strong>рауте</strong> было скучно."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Сигма 
+          </div>
+          <div class="def">
+           одинокий, успешный "волк".
+          </div>
+          <div class="example">
+            "Он не нуждается в отношениях, он <strong>сигма</strong> ."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Без понтов 
+          </div>
+          <div class="def">
+           скромно, без хвастовства.
+          </div>
+          <div class="example">
+            "Живём <strong>без понта</strong>, зато душевно."
+          </div>
+         </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+          Окак
+          </div>
+          <div class="def">
+           Междометие удивления .
+          </div>
+          <div class="example">
+            "— Он заплатил 5000 за кофе. <strong>Окак</strong>, ну и богач."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Бабки
+          </div>
+          <div class="def">
+             деньги.
+          </div>
+          <div class="example">
+            "Косишь <strong>бабки</strong>."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+          Кидала
+          </div>
+          <div class="def">
+           мошенник.
+          </div>
+          <div class="example">
+            "Смотри не нарвись на <strong>кидалу</strong>."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Оверпауэр 
+          </div>
+          <div class="def">
+           слишком сильный.
+          </div>
+          <div class="example">
+            "Этот меч <strong>оверпауэр</strong>, убивает с одного удара."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Баффать
+          </div>
+          <div class="def">
+           усиливать.
+          </div>
+          <div class="example">
+            "Пора бы<strong>баффать</strong>снайперку."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Раш 
+          </div>
+          <div class="def">
+           быстрое нападение/движение.
+          </div>
+          <div class="example">
+            "Сделаем <strong>раш</strong> на кухню за пирожком."
+          </div>
+       </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+             Нуб
+          </div>
+          <div class="def">
+            новичок, плохой игрок.
+          </div>
+          <div class="example">
+            "Да ты просто <strong>нуб</strong>."
+          </div>
+       </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Кек
+          </div>
+          <div class="def">
+            неудачник.
+          </div>
+          <div class="example">
+            "Он не сдал экзамен? <strong>кек</strong>."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+          Хейтить
+          </div>
+          <div class="def">
+           ненавидеть, поливать грязью.
+          </div>
+          <div class="example">
+            "Не понимаю, зачем <strong>хейтить</strong> просто так."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Агро
+          </div>
+          <div class="def">
+           злоба врагов в играх (или просто злость).
+          </div>
+          <div class="example">
+           "Не кричи, не надо на меня <strong>агро</strong>."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Париться 
+          </div>
+          <div class="def">
+            переживать.
+          </div>
+          <div class="example">
+            "Забей, <strong>не парься</strong> ."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Фармить
+          </div>
+          <div class="def">
+           добывать ресурсы (или просто делать много однообразных действий).
+          </div>
+          <div class="example">
+            "Придется <strong>фармить</strong>  опыт на гоблинах"
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Донатить 
+          </div>
+          <div class="def">
+            переводить деньги (стримеру, в игру).
+          </div>
+          <div class="example">
+            " <strong>Задонать</strong> мне на кофе."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Свайпать
+          </div>
+          <div class="def">
+            листать (ленту, экран).
+          </div>
+          <div class="example">
+            "Целый час <strong>свайпал</strong> тикток"
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Альтушка 
+          </div>
+          <div class="def">
+            девушка альтернативной субкультуры.
+          </div>
+          <div class="example">
+            "Все <strong>альтушки</strong> сейчас красят волосы в розовый."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Нормис
+          </div>
+          <div class="def">
+           обычный, скучный человек, «как все».
+          </div>
+          <div class="example">
+            "Он ходит на работу в 8 утра — полный  <strong>нормис</strong>."
+          </div>
+       </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Жиза
+          </div>
+          <div class="def">
+            жизненно, узнаваемая ситуация.
+          </div>
+          <div class="example">
+            "Забыть пароль от почты? <strong>Жиза</strong>."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Я в прайме
+          </div>
+          <div class="def">
+           Фигура речи о лучшем периоде жизни 
+          </div>
+          <div class="example">
+            "Я закрыл все рабочие задачи. Я в<strong>флексит</strong> прайме!"
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Дед инсайд
+          </div>
+          <div class="def">
+           «Мёртвый внутри» — ироничное описание сильной усталости, апатии, выгорания.
+          </div>
+          <div class="example">
+            "После пробников я просто <strong>дед инсайд</strong>."
+          </div>
+        </div>
+   <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+          Крипово
+          </div>
+          <div class="def">
+          Что-то страшное, пугающее 
+          </div>
+          <div class="example">
+            "Это видео очень<strong> криповое</strong>."
+          </div>
+        </div>
+      <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Муд
+          </div>
+          <div class="def">
+           Настроение, эмоциональное состояние 
+          </div>
+          <div class="example">
+            "Мой<strong>муд</strong> сейчас — лежать на диване и не шевелиться"
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Пикми
+          </div>
+          <div class="def">
+           Pick me girl — девушка, которая пытается привлечь внимание парней, подчёркивая свою «не такую, как все» натуру.
+          </div>
+          <div class="example">
+            "Она говорит, что ей проще дружить с парнями -<strong>пикми</strong>."
+          </div>
+        </div>
+       <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Бести
+          </div>
+          <div class="def">
+           Лучшая подруга или друг (от best).
+          </div>
+          <div class="example">
+            "Сегодня с моей <strong>бести</strong> идем в кино."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Зашквар
+          </div>
+          <div class="def">
+          позор, что-то неприличное. 
+          </div>
+          <div class="example">
+            "Носить такие кроссовки сейчас <strong>флексит</strong> зашквар."
+          </div>
+        </div>
+        <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+            Запилить
+          </div>
+          <div class="def">
+          сделать, создать.
+          </div>
+          <div class="example">
+            "Надо<strong>запилить</strong> видос на ютуб."
+          </div>
+        </div>
+     <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Выкупить
+          </div>
+          <div class="def">
+           понять, осознать.
+          </div>
+          <div class="example">
+            "Ты <strong>выкупил</strong>,  о чем я?"
+          </div>
+        </div>
+      <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Слить
+          </div>
+          <div class="def">
+          проиграть, упустить.
+          </div>
+          <div class="example">
+            "Мы <strong>слили</strong> матч из-за вратаря."
+          </div>
+        </div>
+      <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Стрематься 
+          </div>
+          <div class="def">
+          стесняться.
+          </div>
+          <div class="example">
+            "<strong>Не стремайся</strong> спроси."
+          </div>
+        </div>
+      <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+           Шипперить
+          </div>
+          <div class="def">
+          выдумывать романтические отношения между людьми.
+          </div>
+          <div class="example">
+            "Я <strong>шипперю</strong> их с первой серии"
+          </div>
+        </div>
+      <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+          Хитбокс
+          </div>
+          <div class="def">
+          зона поражения.
+          </div>
+          <div class="example">
+            "У этого босса огромный<strong>хитбокс</strong>."
+          </div>
+        </div>
+      <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+         Фейспалм 
+          </div>
+          <div class="def">
+         закрыть лицо рукой от стыда.
+          </div>
+          <div class="example">
+            "Услышал его ответ и сделал <strong>фейспалм</strong>."
+          </div>
+        </div>
+   <div class="card">
+          <div class="term">
+            <span class="tag">СЛОВО</span>
+         Батл 
+          </div>
+          <div class="def">
+       соревнование.
+          </div>
+          <div class="example">
+            "Устроили <strong>батл</strong>по рэпу."
+          </div>
+        </div>
+   
+
+
+      </section>
+
+    <section id="quiz" class="section">
+      <h2>Игра: Проверь свой сленг!</h2>
+      <div class="quiz">
+        <div class="question">
+          Что означает слово "чилить"?
+        </div>
+        <div class="choices">
+          <div class="choice">А) Быстро бежать</div>
+          <div class="choice">Б) Отдыхать, расслабляться</div>
+          <div class="choice">В) Врать, обманывать</div>
+          <div class="choice">Г) Громко смеятся</div>
+        </div>
+        <button id="next">Далее</button>
+        <div class="score"></div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section">
+      <h2>Галерея</h2>
+      <div class="gallery">
+        <!-- Предполагается, что сюда можно было бы добавить изображения -->
+        <p>Здесь могли бы быть яркие фото, связанные с хип-хопом!</p>
+        <!-- Пример: <img src="images/hiphop1.jpg" alt="Хип-хоп исполнитель"> -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container" style="text-align: center; padding: 20px 0;">
+      <p>© 2026 GeekBot & HipHop Vibes. Все права защищены.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Ваш JavaScript для игры и поиска будет здесь.
+    // Пока что это только HTML и CSS.
+    // Пример структуры для JavaScript:
+    const questions = [
+      {
+        question: "Что означает слово 'чилить'?",
+        choices: ["Быстро бежать", "Отдыхать, расслабляться", "Врать, обманывать", "Громко смеяться"],
+        correctAnswer: "Отдыхать, расслабляться"
+      },
+      {
+        question: "Какое значение у слова 'базара нет'?",
+        choices: ["Нет смысла", "Не разговаривай", "Согласен, без вопросов", "Тишина"],
+        correctAnswer: "Согласен, без вопросов"
+      },
+      {
+        question: "Что такое 'краш' в современном сленге?",
+        choices: ["Серьезная авария", "Мощный компьютер", "Человек, который тебе очень нравится", "Вид кредита"],
+        correctAnswer: "Человек, который тебе очень нравится"
+      },
+      {
+        question: "Как расшифровывается 'ROFL'?",
+        choices: ["Running Only For Laughs", "Rolling On Floor Laughing", "Really Outrageous Funny Legend", "Right Over Left Foot"],
+        correctAnswer: "Rolling On Floor Laughing"
+      },
+      {
+        question: "Что такое 'флексить'?",
+        choices: ["Жаловаться", "Хвастаться/демонстрировать", "Прятаться", "Петь"],
+        correctAnswer: "Хвастаться/демонстрировать"
+      }
+      
+      ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const questionElement = document.querySelector('.quiz .question');
+    const choicesElement = document.querySelector('.quiz .choices');
+    const nextButton = document.getElementById('next');
+    const scoreElement = document.querySelector('.quiz .score');
+
+    function loadQuestion() {
+      const currentQuestion = questions[currentQuestionIndex];
+      questionElement.textContent = currentQuestion.question;
+      choicesElement.innerHTML = ''; // Очищаем предыдущие варианты
+
+      currentQuestion.choices.forEach(choiceText => {
+        const choiceDiv = document.createElement('div');
+        choiceDiv.classList.add('choice');
+        choiceDiv.textContent = choiceText;
+        choicesElement.appendChild(choiceDiv);
+      });
+
+      nextButton.textContent = 'Далее';
+      nextButton.disabled = true;
+      scoreElement.textContent = ''; // Очищаем предыдущий результат
+    }
+
+    function selectAnswer(event) {
+      const selectedChoice = event.target;
+      const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+
+      // Снимаем все предыдущие классы с выборов
+      document.querySelectorAll('.quiz .choice').forEach(choice => {
+        choice.classList.remove('correct', 'wrong');
+        choice.style.pointerEvents = 'none'; // Отключаем клики после выбора
+      });
+
+      // Применяем классы к выбранному ответу
+      if (selectedChoice.textContent === correctAnswer) {
+        selectedChoice.classList.add('correct');
+        score++;
+      } else {
+        selectedChoice.classList.add('wrong');
+        // Подсвечиваем правильный ответ, если выбран неправильный
+        document.querySelectorAll('.quiz .choice').forEach(choice => {
+          if (choice.textContent === correctAnswer) {
+            choice.classList.add('correct');
+          }
+        });
+      }
+
+      nextButton.disabled = false;
+      scoreElement.textContent = `Счет: ${score} / ${questions.length}`;
+
+      // Проверяем, это последний вопрос
+      if (currentQuestionIndex === questions.length - 1) {
+        nextButton.textContent = 'Перезапустить';
+      } else {
+        nextButton.textContent = 'Далее';
+      }
+    }
+
+    function handleNextButton() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+      } else {
+        restartQuiz(); // Перезапускаем игру, если это последний вопрос
+      }
+    }
+
+    function restartQuiz() {
+        currentQuestionIndex = 0;
+        score = 0;
+        nextButton.textContent = 'Далее';
+        nextButton.disabled = true;
+        scoreElement.textContent = '';
+        loadQuestion(); // Загружаем первый вопрос снова
+        // Удаляем "правильный" / "неправильный" классы со всех выборов
+        document.querySelectorAll('.quiz .choice').forEach(choice => {
+            choice.classList.remove('correct', 'wrong');
+            choice.style.pointerEvents = 'auto'; // Включаем клики снова
+        });
+    }
+
+
+    // Инициализация игры
+    loadQuestion();
+
+    // Обработчики событий
+    choicesElement.addEventListener('click', (event) => {
+      if (event.target.classList.contains('choice')) {
+        selectAnswer(event);
+      }
+    });
+
+    nextButton.addEventListener('click', handleNextButton);
+
+  </script>
+</body>
+</html>
